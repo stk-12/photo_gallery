@@ -83,9 +83,11 @@ function init(){
         // -1〜+1の範囲でマウス座標を登録
         mouse.x = ( x / w ) * 2 - 1;
         mouse.y = -( y / h ) * 2 + 1;
-
-        console.log(mouse);
     }
+
+
+    // レイキャストを作成
+    const raycaster = new THREE.Raycaster();
 
 
 
@@ -112,6 +114,17 @@ function init(){
         }
 
         angle += angSpeed;
+
+        // レイキャスト光線ベクトル生成
+        raycaster.setFromCamera(mouse, camera);
+        // 光線と交わるオブジェクト取得
+        const intersects = raycaster.intersectObjects(group.children);
+        if(intersects.length > 0) {
+            console.log(intersects[0]);
+            intersects[0].object.material.transparent = true;
+            intersects[0].object.material.opacity = 0.5;
+        }
+
         
         //レンダリング
         renderer.render(scene, camera);
