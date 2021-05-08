@@ -64,6 +64,31 @@ function init(){
         group.add(plane);
     }
 
+    // canvas上のマウス座標を取得
+    const canvas = document.querySelector('#canvas');
+    // マウス座標用のベクトルを作成
+    const mouse = new THREE.Vector2();
+
+    canvas.addEventListener('mousemove', handleMouseMove);
+
+    function handleMouseMove(event) {
+        const element = event.currentTarget; // element = canvas
+        // canvas上のXY座標
+        const x = event.clientX - element.offsetLeft;
+        const y = event.clientY - element.offsetTop;
+        // canvasの幅・高さ
+        const w = element.offsetWidth;
+        const h = element.offsetHeight;
+
+        // -1〜+1の範囲でマウス座標を登録
+        mouse.x = ( x / w ) * 2 - 1;
+        mouse.y = -( y / h ) * 2 + 1;
+
+        console.log(mouse);
+    }
+
+
+
     //レンダリング
     renderer.render(scene, camera);
 
